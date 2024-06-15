@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Envelope Roxo</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #e0b3ff; /* Cor de fundo roxa clara */
+            margin: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        .envelope-container {
+            text-align: center;
+            position: relative;
+        }
+
+        .envelope {
+            width: 200px;
+            height: 150px;
+            background-color: #b366ff; /* Cor do envelope */
+            position: relative;
+            margin-bottom: 20px;
+            border-radius: 5px;
+            overflow: hidden;
+            transition: transform 0.5s ease;
+        }
+
+        .envelope::before {
+            content: "";
+            position: absolute;
+            top: -60px;
+            left: 0;
+            width: 200px;
+            height: 150px;
+            background-color: #8000ff; /* Cor da aba do envelope */
+            clip-path: polygon(0 0, 100% 0, 50% 50%);
+            transition: transform 0.5s ease;
+            transform-origin: top;
+        }
+
+        .envelope.open::before {
+            transform: rotateX(180deg);
+        }
+
+        .message {
+            position: absolute;
+            top: 60px;
+            width: 100%;
+            text-align: center;
+            color: white;
+            font-size: 24px;
+            visibility: hidden;
+            transition: visibility 0.3s ease;
+        }
+
+        .envelope.open .message {
+            visibility: visible;
+        }
+
+        .buttons button {
+            background-color: #b366ff;
+            border: none;
+            color: white;
+            padding: 10px 20px;
+            margin: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            border-radius: 5px;
+        }
+
+        .buttons button:hover {
+            background-color: #8000ff;
+        }
+
+        .stars {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 200px;
+            height: 200px;
+            pointer-events: none;
+            display: none;
+        }
+
+        .stars span {
+            position: absolute;
+            width: 5px;
+            height: 5px;
+            background: #ffff66; /* Cor das estrelas */
+            border-radius: 50%;
+            animation: star-animation 1s linear infinite;
+        }
+
+        .star1 { top: 70px; left: 10px; }
+        .star2 { top: 60px; left: 50px; }
+        .star3 { top: 50px; left: 90px; }
+        .star4 { top: 60px; left: 130px; }
+        .star5 { top: 70px; left: 170px; }
+
+        @keyframes star-animation {
+            from {
+                transform: translateY(0) scale(1);
+                opacity: 1;
+            }
+            to {
+                transform: translateY(-100px) scale(0);
+                opacity: 0;
+            }
+        }
+
+        .envelope.open .stars {
+            display: block;
+            animation: stars-animation 1s ease forwards;
+        }
+
+        @keyframes stars-animation {
+            0% {
+                opacity: 0;
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(-100px);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="envelope-container">
+        <div class="envelope" id="envelope">
+            <div class="message">Paçoca</div>
+            <div class="stars" id="stars">
+                <span class="star1"></span>
+                <span class="star2"></span>
+                <span class="star3"></span>
+                <span class="star4"></span>
+                <span class="star5"></span>
+            </div>
+        </div>
+        <div class="buttons">
+            <button id="openBtn">OPEN</button>
+            <button id="resetBtn">RESET</button>
+        </div>
+    </div>
+    <script>
+        const envelope = document.getElementById('envelope');
+        const openBtn = document.getElementById('openBtn');
+        const resetBtn = document.getElementById('resetBtn');
+
+        openBtn.addEventListener('click', () => {
+            envelope.classList.add('open');
+        });
+
+        resetBtn.addEventListener('click', () => {
+            envelope.classList.remove('open');
+        });
+    </script>
+</body>
+</html>
